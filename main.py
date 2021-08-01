@@ -11,20 +11,25 @@ def ViewsData(driver):
 	return views
 
 def FollowData(driver):
-	driver.get(f"https://img.shields.io/github/followers/{username}?label=Follow&color=blueviolet&style=flat-square&logo=GitHub")
-	follow = int(
-		driver.find_element_by_css_selector(
-			"svg > g:nth-child(3) > text:nth-child(3)"
-			).get_attribute("innerHTML")
-		)
-	return follow
+	driver.get(f"https://www.github.com/{username}")
+	try:
+		follow = driver.find_element_by_css_selector(
+			"span.text-bold.color-text-primary"
+			)
+	except:
+		return "Not Found"
+
+	if follow:
+		return follow.text
+	else:
+		return "Not Found"
 
 def BioData(driver):
 	driver.get(f"https://github.com/{username}")
-	k = driver.find_element_by_css_selector(
+	try:
+		k = driver.find_element_by_css_selector(
 		"div.p-note.user-profile-bio.mb-3.js-user-profile-bio.f4"
 		)
-	try:
 
 		bio = k.find_element_by_css_selector(
 			"div"
@@ -38,8 +43,8 @@ def BioData(driver):
 		return "Not Found"
 
 def LocationData(driver):
-	k = driver.find_element_by_css_selector("div.js-profile-editable-area.d-flex.flex-column.d-md-block")
 	try:
+		k = driver.find_element_by_css_selector("div.js-profile-editable-area.d-flex.flex-column.d-md-block")
 		location = k.find_element_by_css_selector(
 			"span.p-label"
 			)
@@ -70,10 +75,7 @@ def DisplayEvent():
 		print(f"Profils view : {ViewsDD} view")
 	else:
 		print(f"Profils views : {ViewsDD} views")
-	if FollowDD <= 1:
-		print(f"Follower : {FollowDD}")
-	else:
-		print(f"Followers : {FollowDD}")
+	print(f"Followers : {FollowDD}")
 
 	print(f"Links profile : https://github.com/{username}")
 
