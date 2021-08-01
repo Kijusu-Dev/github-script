@@ -24,10 +24,18 @@ def BioData(driver):
 	k = driver.find_element_by_css_selector(
 		"div.p-note.user-profile-bio.mb-3.js-user-profile-bio.f4"
 		)
-	bio = k.find_element_by_css_selector(
-		"div"
-		)
-	return bio.text
+	try:
+
+		bio = k.find_element_by_css_selector(
+			"div"
+			)
+	except:
+		return "Not Found"
+
+	if bio:
+		return bio.text
+	else:
+		return "Not Found"
 
 def LocationData(driver):
 	k = driver.find_element_by_css_selector("div.js-profile-editable-area.d-flex.flex-column.d-md-block")
@@ -70,13 +78,3 @@ def DisplayEvent():
 	print(f"Links profile : https://github.com/{username}")
 
 DisplayEvent()
-
-"""
-def FollowData(driver):
-	driver.get(f"https://github.com/{username}")
-	driver.find_elements_by_css_selector("a.Link--secondary.no-underline.no-wrap")
-	follow = driver.find_element_by_css_selector(
-		"span.text-bold.color-text-primary"
-		)
-	return follow
-"""
